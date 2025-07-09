@@ -2,8 +2,6 @@ from fastapi import FastAPI
 import logging
 from src.api.routes import router
 from src.core.database import create_tables
-# Import models to ensure they are registered with SQLAlchemy
-from src.models import db_models
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -16,6 +14,7 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
+
 @app.on_event("startup")
 async def startup_event():
     """Initialize database tables on startup."""
@@ -23,6 +22,7 @@ async def startup_event():
     logger.info("Database tables created successfully")
 
 app.include_router(router)
+
 
 if __name__ == "__main__":
     import uvicorn

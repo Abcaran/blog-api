@@ -32,7 +32,7 @@ class Comment(Base):
     author = Column(String(100), nullable=False, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    
+
     # Foreign key to post
     post_id = Column(Integer, ForeignKey("posts.id"), nullable=False)
 

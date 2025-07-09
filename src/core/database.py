@@ -1,7 +1,6 @@
 """
 Database configuration and session management for SQLite with SQLAlchemy.
 """
-import os
 from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -10,6 +9,7 @@ from sqlalchemy.orm import sessionmaker
 # Database configuration
 DATABASE_URL = "sqlite:///./blog.db"
 
+
 # Ensure the database directory exists
 def ensure_db_directory():
     """Ensure the database directory exists."""
@@ -17,7 +17,9 @@ def ensure_db_directory():
     db_dir = db_path.parent
     db_dir.mkdir(exist_ok=True)
 
+
 ensure_db_directory()
+
 
 # Create SQLAlchemy engine
 engine = create_engine(

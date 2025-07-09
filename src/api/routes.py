@@ -84,7 +84,12 @@ async def delete_post(post_id: int):
         )
 
 
-@router.post("/posts/{post_id}/comments", response_model=CommentResponse, status_code=status.HTTP_201_CREATED, tags=["comments"])
+@router.post(
+    "/posts/{post_id}/comments",
+    response_model=CommentResponse,
+    status_code=status.HTTP_201_CREATED,
+    tags=["comments"]
+)
 async def create_comment(post_id: int, comment: CommentCreate):
     """Create a new comment for a post."""
     db_post = post_repository.get_post(post_id=post_id)

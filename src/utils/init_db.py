@@ -19,7 +19,7 @@ def create_sample_data():
             ),
             PostCreate(
                 title="Getting Started with FastAPI",
-                content="FastAPI is a modern, fast web framework for building APIs with Python 3.7+ based on standard Python type hints.",
+                content="FastAPI is a modern, fast web framework on standard Python type hints.",
                 author="Tech Writer"
             ),
             PostCreate(
@@ -73,23 +73,23 @@ def main():
     """Main function to initialize the database."""
     print("🗄️  Initializing Blog API Database")
     print("=" * 40)
-    
+
     try:
         # Create tables
         print("Creating database tables...")
         create_tables()
         print("✅ Database tables created successfully")
-        
+
         # Create sample data
         print("\nCreating sample data...")
         create_sample_data()
-        
+
         print("\n🎉 Database initialization completed!")
         print("\nYou can now start the API server and test the endpoints.")
         print("Sample data includes:")
         print("- 3 blog posts")
         print("- 5 comments across the posts")
-        
+
     except Exception as e:
         print(f"❌ Database initialization failed: {e}")
 
@@ -103,7 +103,7 @@ def reset_db():
 
 if __name__ == "__main__":
     import sys
-    
+
     if len(sys.argv) > 1 and sys.argv[1] == "--reset":
         reset_db()
     else:
