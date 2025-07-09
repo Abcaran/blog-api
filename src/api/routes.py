@@ -4,7 +4,6 @@ from typing import List
 from src.models.pydantic_models import (
     PostResponse,
     PostCreate,
-    PostSummary,
     PostListItem,
     PostUpdate,
     CommentResponse,
