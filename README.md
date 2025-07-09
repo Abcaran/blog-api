@@ -14,6 +14,7 @@ A modern, fast blog API built with FastAPI, SQLAlchemy, and SQLite. This API pro
 
 ## Next Steps
 
+- **Fix test_api_routes.py**
 - **API authentication and authorization**
 - **Logging and monitoring**
 - **Caching**
