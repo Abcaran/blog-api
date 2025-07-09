@@ -1,7 +1,8 @@
 from typing import List, Optional
-from database import SessionLocal
-from db_models import Post, Comment
-from model import PostCreate, PostUpdate, CommentCreate, CommentUpdate
+from sqlalchemy.orm import joinedload
+from src.core.database import SessionLocal
+from src.models.db_models import Post, Comment
+from src.models.pydantic_models import PostCreate, PostUpdate, CommentCreate, CommentUpdate
 
 
 class PostRepository:
@@ -19,15 +20,17 @@ class PostRepository:
             db.add(db_post)
             db.commit()
             db.refresh(db_post)
+            # Access comments to trigger loading while session is still open
+            _ = db_post.comments
             return db_post
         finally:
             db.close()
 
     def get_post(self, post_id: int) -> Optional[Post]:
-        """Get a post by ID."""
+        """Get a post by ID with eagerly loaded comments."""
         db = SessionLocal()
         try:
-            return db.query(Post).filter(Post.id == post_id).first()
+            return db.query(Post).options(joinedload(Post.comments)).filter(Post.id == post_id).first()
         finally:
             db.close()
 
@@ -43,7 +46,7 @@ class PostRepository:
         """Update a post."""
         db = SessionLocal()
         try:
-            db_post = db.query(Post).filter(Post.id == post_id).first()
+            db_post = db.query(Post).options(joinedload(Post.comments)).filter(Post.id == post_id).first()
             if not db_post:
                 return None
 
@@ -53,6 +56,8 @@ class PostRepository:
 
             db.commit()
             db.refresh(db_post)
+            # Access comments to ensure they're loaded
+            _ = db_post.comments
             return db_post
         finally:
             db.close()

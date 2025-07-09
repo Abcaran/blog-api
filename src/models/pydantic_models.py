@@ -62,9 +62,23 @@ class PostResponse(PostBase):
 
 
 class PostSummary(BaseModel):
-    """Schema for blog post summary (without comments for list views)."""
+    """Schema for blog post summary (without content and comments for compact list views)."""
     id: int
     title: str
+    author: str
+    created_at: datetime
+    updated_at: Optional[datetime] = None
+    comment_count: int = Field(default=0, description="Number of comments on this post")
+
+    class Config:
+        from_attributes = True
+
+
+class PostListItem(BaseModel):
+    """Schema for blog post list item (includes content but not comments)."""
+    id: int
+    title: str
+    content: str
     author: str
     created_at: datetime
     updated_at: Optional[datetime] = None

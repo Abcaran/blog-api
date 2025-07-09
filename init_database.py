@@ -1,16 +1,15 @@
-#!/usr/bin/env python3
-"""
-Database initialization script for the blog API.
-"""
-from database import create_tables, reset_database
-from repository import post_repository, comment_repository
-from model import PostCreate, CommentCreate
+import os
+import sys
 
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
+
+from src.core.database import create_tables, reset_database
+from src.repositories.repository import post_repository, comment_repository
+from src.models.pydantic_models import PostCreate, CommentCreate
 
 def create_sample_data():
     """Create some sample blog posts and comments for testing."""
     try:
-        # Create sample blog posts
         sample_posts = [
             PostCreate(
                 title="Welcome to Our Blog",
@@ -67,11 +66,11 @@ def create_sample_data():
 
     except Exception as e:
         print(f"❌ Error creating sample data: {e}")
-
+        raise
 
 def main():
     """Main function to initialize the database."""
-    print("🗄️  Initializing Blog API Database")
+    print("🗄️ Initializing Blog API Database")
     print("=" * 40)
     
     try:
@@ -92,18 +91,15 @@ def main():
         
     except Exception as e:
         print(f"❌ Database initialization failed: {e}")
-
+        sys.exit(1)
 
 def reset_db():
     """Reset the database (drop and recreate all tables)."""
-    print("⚠️  Resetting database (this will delete all data)...")
+    print("⚠️ Resetting database (this will delete all data)...")
     reset_database()
     print("✅ Database reset completed")
 
-
 if __name__ == "__main__":
-    import sys
-    
     if len(sys.argv) > 1 and sys.argv[1] == "--reset":
         reset_db()
     else:
